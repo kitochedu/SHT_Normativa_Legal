@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "444841742218",
+    "firebase_url": "https://normativalegalsht.firebaseio.com",
+    "project_id": "normativalegalsht",
+    "storage_bucket": "normativalegalsht.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444841742218:android:75ecb442ffed967f",
+        "android_client_info": {
+          "package_name": "com.isaacpilatuna.sht_normativa_legal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444841742218-qfbn5qr5a808bgkfv06836rksbsccmmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isaacpilatuna.sht_normativa_legal",
+            "certificate_hash": "bf9ea4b5e2566166e446e4afa88440b105cd04c8"
+          }
+        },
+        {
+          "client_id": "444841742218-uj7grp3qclssk43o4kjhhgjuvf9qq51j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA46IMxhLe0tGrXEykCcRhzjIfsTLp1R4Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444841742218-uj7grp3qclssk43o4kjhhgjuvf9qq51j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
