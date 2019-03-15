@@ -10,14 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.isaacpilatuna.sht_normativa_legal.Controlador.ControlAutenticacion;
+import com.isaacpilatuna.sht_normativa_legal.Controlador.ControlCorreo;
 import com.isaacpilatuna.sht_normativa_legal.Controlador.MenuControl;
 import com.isaacpilatuna.sht_normativa_legal.ModuloNormativas.NormativasActivity;
 import com.isaacpilatuna.sht_normativa_legal.R;
 
 public class ContactosActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Button btnEnviarComentario;
+    private EditText txtComentario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,25 @@ public class ContactosActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        btnEnviarComentario=findViewById(R.id.btnEnviarComentario);
+        txtComentario=findViewById(R.id.txtComentario);
+        btnEnviarComentario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enviarComentario();
+            }
+        });
+    }
+
+    private void enviarComentario() {
+        String mensajeTexto = txtComentario.getText().toString();
+        btnEnviarComentario.setEnabled(false);
+        txtComentario.setEnabled(false);
+        ControlCorreo controlCorreo = new ControlCorreo();
+        controlCorreo.enviarCorreo(mensajeTexto,this,btnEnviarComentario,txtComentario);
+
+
     }
 
     @Override

@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/decorativo2"
     tools:context=".ModuloAutenticacion.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="128dp"
         android:layout_marginLeft="128dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="128dp"
         android:layout_marginRight="128dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/txtCorreoLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
@@ -55,7 +58,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txtPasswordLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <EditText
         android:id="@+id/txtPasswordLogin"
@@ -63,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
@@ -72,7 +77,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnIniciarSesionLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCorreoLogin" />
 
     <Button
         android:id="@+id/btnIniciarSesionLogin"
@@ -83,8 +89,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="148dp"
         android:layout_marginRight="148dp"
+        android:layout_marginBottom="8dp"
         android:drawableLeft="@drawable/ic_arrow_forward_black_24dp"
         android:text="Iniciar Sesión"
+        app:layout_constraintBottom_toTopOf="@+id/btnCrearCuentaLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPasswordLogin" />
@@ -95,10 +103,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
         android:layout_marginLeft="148dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="148dp"
         android:layout_marginRight="148dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginBottom="8dp"
         android:drawableLeft="@drawable/ic_person_add_black_24dp"
         android:text="Crear Cuenta"
         app:layout_constraintBottom_toBottomOf="parent"

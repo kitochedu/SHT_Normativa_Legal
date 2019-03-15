@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_google_signin_btn_text_dark_default"
+    android:background="@drawable/decorativo2"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ModuloContactos.ContactosActivity"
     tools:showIn="@layout/app_bar_contactos">
@@ -15,10 +15,10 @@
         android:layout_height="0dp"
         android:layout_marginStart="128dp"
         android:layout_marginLeft="128dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="128dp"
         android:layout_marginRight="128dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/colorNaranjaPastel"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnEnviar"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnviarComentario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,7 @@
             android:background="@color/colorNaranjaPastel">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/txtComentario"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -129,7 +129,7 @@
     </android.support.v7.widget.CardView>
 
     <Button
-        android:id="@+id/btnEnviar"
+        android:id="@+id/btnEnviarComentario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -137,7 +137,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="48dp"
         android:background="@android:color/holo_orange_light"
         android:text="Enviar"
         app:layout_constraintBottom_toBottomOf="parent"

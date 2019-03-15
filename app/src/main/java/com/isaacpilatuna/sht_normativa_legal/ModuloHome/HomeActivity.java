@@ -19,6 +19,8 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -50,8 +52,7 @@ public class HomeActivity extends AppCompatActivity
     private int currentPosition=0;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference;
-    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    private StorageReference storageReference;
+    private ProgressBar progressBarSponsors;
 
 
 
@@ -73,12 +74,14 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         viewPager = findViewById(R.id.viewPagerAuspiciantes);
-
+        progressBarSponsors=findViewById(R.id.progressBarSponsors);
         cargarAuspiciantes();
     }
 
     private void cargarAuspiciantes() {
+        progressBarSponsors.setVisibility(View.VISIBLE);
         final ArrayList<String> imagesURLS = new ArrayList<>();
+        final ArrayList<String> redirectURLS = new ArrayList<>();
         databaseReference=firebaseDatabase.getReference("sponsors");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,11 +90,14 @@ public class HomeActivity extends AppCompatActivity
                 int contador=0;
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
                     String url=ds.child("url").getValue().toString();
+                    String redirect=ds.child("redirect").getValue().toString();
                     imagesURLS.add(url);
+                    redirectURLS.add(redirect);
                     contador++;
                     if(contador==total){
+                        progressBarSponsors.setVisibility(View.GONE);
                         Log.i("URL ","URLS: "+imagesURLS.size());
-                        ImageAdapter imageAdapter = new ImageAdapter(getApplicationContext(),imagesURLS);
+                        ImageAdapter imageAdapter = new ImageAdapter(getApplicationContext(),imagesURLS,redirectURLS);
                         viewPager.setAdapter(imageAdapter);
                     }
                 }
