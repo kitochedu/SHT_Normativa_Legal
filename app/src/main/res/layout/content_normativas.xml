@@ -14,20 +14,36 @@
         android:layout_height="match_parent"
         android:background="@drawable/decorativo2">
 
+        <TextView
+            android:id="@+id/txtTituloCategoriaPDF"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorNaranjaPastel"
+            android:gravity="center"
+            android:text="txtCategoria"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnNuevoDocumento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/btnNuevoDocumento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:drawableLeft="@drawable/ic_file_upload_black_24dp"
             android:text="Nuevo Documento"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloCategoriaPDF" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -50,7 +66,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Título del documento"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnBuscarDocumentos"
@@ -82,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0 Resultados"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewDocumentos"
@@ -91,4 +108,5 @@
                 android:scrollbars="vertical" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
+
 </RelativeLayout>

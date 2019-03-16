@@ -88,8 +88,8 @@ public class RecyclerViewAdapterDocumentos  extends RecyclerView.Adapter<Recycle
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolderDocumentos holder, int posicion) {
         final DocumentoPDF documento = listaDocumentos.get(posicion);
-        holder.txtAutorDocumento.setText(documento.getAutor());
-        holder.txtTituloDocumento.setText(documento.getTitulo());
+        holder.txtAutorDocumento.setText("Autor: "+documento.getAutor());
+        holder.txtTituloDocumento.setText("Titulo:"+documento.getTitulo());
         holder.urlPDF=documento.getUrl();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
         holder.txtFechaSubidaDocumento.setText("Subido: "+format.format(documento.getFecha()));

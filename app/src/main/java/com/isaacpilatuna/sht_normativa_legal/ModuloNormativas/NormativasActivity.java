@@ -49,14 +49,20 @@ import java.util.UUID;
 public class NormativasActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String categoriaKey="categoria";
+    private String categoriaDB="importantes";
+    private String tituloCategoria="Importantes";
+
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseStorage storage=FirebaseStorage.getInstance();
-    DatabaseReference ref = database.getReference("documentos");
+    DatabaseReference ref;
     Button btnNuevoDocumento;
     EditText txtBusquedaDocumento;
     Button btnBuscarDocumento;
     TextView txtResultadosDocumentos;
     TextView txtNombreDocumento;
+    TextView txtTituloCategoriaPDFS;
     RecyclerView recyclerViewDocumentos;
     Uri pdfUri;
     ProgressBar progressBarUpload;
@@ -84,6 +90,13 @@ public class NormativasActivity extends AppCompatActivity
         this.txtBusquedaDocumento=findViewById(R.id.txtBusquedaDocumentos);
         this.recyclerViewDocumentos=findViewById(R.id.recyclerViewDocumentos);
         this.txtResultadosDocumentos=findViewById(R.id.txtResultadosDocumentos);
+        this.txtTituloCategoriaPDFS=findViewById(R.id.txtTituloCategoriaPDF);
+        Intent thisIntent = getIntent();
+        categoriaDB=thisIntent.getStringExtra(categoriaKey);
+        ref = database.getReference("documentos").child(categoriaDB);
+        tituloCategoria = obtenerTituloCategoria(categoriaDB);
+        txtTituloCategoriaPDFS.setText(tituloCategoria);
+
 
         recyclerViewDocumentos.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewDocumentos.setAdapter(new RecyclerViewAdapterDocumentos(ref,this,txtResultadosDocumentos));
@@ -96,6 +109,46 @@ public class NormativasActivity extends AppCompatActivity
 
 
 
+    }
+
+    private String obtenerTituloCategoria(String categoriaDB) {
+        switch (categoriaDB){
+            case "importantes":
+                return "Importantes";
+
+            case "biologicos":
+                return "Biológicos";
+
+            case "electricos":
+                return "Eléctricos";
+
+            case "ergonomicos":
+                return "Ergonómicos";
+
+            case "fisicoquimicos":
+                return "Físico-Químicos";
+
+            case "fisicos":
+                return "Físicos";
+
+            case "locativos":
+                return "Locativos";
+
+            case "naturales":
+                return "Naturales";
+
+            case "psicosociales":
+                return "Psicosociales";
+
+            case "quimicos":
+                return "Químicos";
+
+            case "seguridad_fisica":
+                return "Seguridad Física";
+
+        }
+
+        return "Importantes";
     }
 
     public void selectPDF(){
@@ -190,13 +243,15 @@ public class NormativasActivity extends AppCompatActivity
                             progressBarUpload.setProgress(0);
                             progressBarUpload.setVisibility(View.VISIBLE);
                             final StorageReference storageReference = storage.getReference();
-                            final StorageReference pathReference = storageReference.child("documentos").child(titulo);
-                            storageReference.child("documentos").child(titulo).putFile(pdfUri)
+
+                            final StorageReference pathReference = storageReference.child("documentos");
+                            final StorageReference finalReference = pathReference.child(categoriaDB).child(titulo);
+                            storageReference.child("documentos").child(categoriaDB).child(titulo).putFile(pdfUri)
                                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                            pathReference.
+                                            finalReference.
                                                     getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
                                                 public void onSuccess(Uri uri) {

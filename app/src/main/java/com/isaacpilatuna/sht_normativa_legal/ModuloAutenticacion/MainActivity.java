@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.isaacpilatuna.sht_normativa_legal.Controlador.ControlAutenticacion;
 import com.isaacpilatuna.sht_normativa_legal.ModuloHome.HomeActivity;
+import com.isaacpilatuna.sht_normativa_legal.ModuloNormativas.MenuNormativasActivity;
 import com.isaacpilatuna.sht_normativa_legal.R;
 
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void iniciarHome(){
         Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+       // Intent intent = new Intent(getApplicationContext(),MenuNormativasActivity.class);
         startActivity(intent);
         finish();
     }

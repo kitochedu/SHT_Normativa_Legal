@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.isaacpilatuna.sht_normativa_legal.ModuloContactos.ContactosActivity;
 import com.isaacpilatuna.sht_normativa_legal.ModuloMision.MisionActivity;
+import com.isaacpilatuna.sht_normativa_legal.ModuloNormativas.MenuNormativasActivity;
 import com.isaacpilatuna.sht_normativa_legal.ModuloNormativas.NormativasActivity;
 import com.isaacpilatuna.sht_normativa_legal.R;
 
@@ -41,7 +42,7 @@ public class MenuControl {
 
         } else if (id == R.id.nav_normativas) {
             if(!modulo.equals("Normativas")){
-                Intent intentNormativas = new Intent(activity,NormativasActivity.class);
+                Intent intentNormativas = new Intent(activity,MenuNormativasActivity.class);
                 activity.startActivity(intentNormativas);
                 if(!modulo.equals("Home")){
                     activity.finish();
