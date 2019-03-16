@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -45,14 +48,14 @@ import java.util.TimerTask;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private List<Slide> slideList= new ArrayList<>();
     private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
     private Timer timer;
-    private int currentPosition=0;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference;
     private ProgressBar progressBarSponsors;
+    private LinearLayout sliderDotsPanel;
+    private int dotsCount;
+    private ImageView[] dotsImagesViews;
 
 
 
@@ -75,6 +78,8 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         viewPager = findViewById(R.id.viewPagerAuspiciantes);
         progressBarSponsors=findViewById(R.id.progressBarSponsors);
+        sliderDotsPanel=findViewById(R.id.linearLayoutDots);
+        timer = new Timer();
         cargarAuspiciantes();
     }
 
@@ -98,7 +103,10 @@ public class HomeActivity extends AppCompatActivity
                         progressBarSponsors.setVisibility(View.GONE);
                         Log.i("URL ","URLS: "+imagesURLS.size());
                         ImageAdapter imageAdapter = new ImageAdapter(getApplicationContext(),imagesURLS,redirectURLS);
+
                         viewPager.setAdapter(imageAdapter);
+                        dibujarPuntos(imageAdapter,viewPager);
+                        timer.scheduleAtFixedRate(new SliderTimerTask(HomeActivity.this,viewPager),2000,4000);
                     }
                 }
             }
@@ -115,7 +123,37 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    public void dibujarPuntos(ImageAdapter imageAdapter,ViewPager viewPager){
+        dotsCount=imageAdapter.getCount();
+        dotsImagesViews=new ImageView[dotsCount];
+        for (int i=0;i<dotsCount;i++){
+            dotsImagesViews[i] = new ImageView(this);
+            dotsImagesViews[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.nonactive_dot));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(8,0,8,0);
+            sliderDotsPanel.addView(dotsImagesViews[i],params);
+        }
+        dotsImagesViews[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.active_dot));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for(int i=0;i<dotsCount;i++){
+                    dotsImagesViews[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.nonactive_dot));
+                }
+                dotsImagesViews[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.active_dot));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {
