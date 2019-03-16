@@ -11,5 +11,6 @@
     <string name="title_activity_contactos">Contactos</string>
     <string name="title_activity_normativas">Normativas</string>
     <string name="normativa_legal"><u>Normativa Legal</u></string>
+    <string name="title_activity_menu_normativas">Normativas</string>
 
 </resources>
