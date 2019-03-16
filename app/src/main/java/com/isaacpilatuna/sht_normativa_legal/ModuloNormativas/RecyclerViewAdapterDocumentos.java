@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.isaacpilatuna.sht_normativa_legal.Modelo.DocumentoPDF;
 import com.isaacpilatuna.sht_normativa_legal.*;
 
@@ -24,53 +28,39 @@ public class RecyclerViewAdapterDocumentos  extends RecyclerView.Adapter<Recycle
 
     AppCompatActivity normasActivity;
     TextView txtResultados;
-    DatabaseReference ref;
     ArrayList<DocumentoPDF> listaDocumentos=new ArrayList<>();
     final String URL_KEY="URL_KEY";
 
 
 
-    public RecyclerViewAdapterDocumentos(DatabaseReference ref, AppCompatActivity normasActivity, final TextView txtResultados) {
+    public RecyclerViewAdapterDocumentos(String categoriaDB, AppCompatActivity normasActivity, final TextView txtResultados) {
         super();
         this.normasActivity=normasActivity;
         this.txtResultados=txtResultados;
-        this.ref=ref;
-
-        ref.addChildEventListener(new ChildEventListener() {
+        ValueEventListener valueEventListener= new ValueEventListener() {
             @Override
-            public void onChildAdded( DataSnapshot dataSnapshot,  String s) {
-                String autor = dataSnapshot.child("autor").getValue().toString();
-                String titulo = dataSnapshot.child("titulo").getValue().toString();
-                String url = dataSnapshot.child("url").getValue().toString();
-                Long tiempoPublicacion = (Long) dataSnapshot.child("fecha").child("time").getValue();
-                Date fechaPublicacion = new Date(tiempoPublicacion);
-                listaDocumentos.add(new DocumentoPDF(titulo,autor,fechaPublicacion,url));
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listaDocumentos.clear();
+                for(DataSnapshot snapshotChild:dataSnapshot.getChildren()){
+                    String autor = snapshotChild.child("autor").getValue().toString();
+                    String titulo = snapshotChild.child("titulo").getValue().toString();
+                    String url = snapshotChild.child("url").getValue().toString();
+                    Long tiempoPublicacion = (Long) snapshotChild.child("fecha").child("time").getValue();
+                    Date fechaPublicacion = new Date(tiempoPublicacion);
+                    listaDocumentos.add(new DocumentoPDF(titulo,autor,fechaPublicacion,url));
+                }
                 txtResultados.setText(listaDocumentos.size()+" Resultados");
-                notifyItemInserted(listaDocumentos.size());
-
-
+                notifyDataSetChanged();
             }
 
             @Override
-            public void onChildChanged( DataSnapshot dataSnapshot,  String s) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-
-            @Override
-            public void onChildRemoved( DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved( DataSnapshot dataSnapshot,  String s) {
-
-            }
-
-            @Override
-            public void onCancelled( DatabaseError databaseError) {
-
-            }
-        });
+        };
+        Query query = FirebaseDatabase.getInstance().getReference("documentos").child(categoriaDB)
+                .orderByChild("titulo");
+        query.addValueEventListener(valueEventListener);
 
 
     }
@@ -89,7 +79,7 @@ public class RecyclerViewAdapterDocumentos  extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(@NonNull RecyclerViewHolderDocumentos holder, int posicion) {
         final DocumentoPDF documento = listaDocumentos.get(posicion);
         holder.txtAutorDocumento.setText("Autor: "+documento.getAutor());
-        holder.txtTituloDocumento.setText("Titulo:"+documento.getTitulo());
+        holder.txtTituloDocumento.setText("Titulo: "+documento.getTitulo());
         holder.urlPDF=documento.getUrl();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
         holder.txtFechaSubidaDocumento.setText("Subido: "+format.format(documento.getFecha()));
