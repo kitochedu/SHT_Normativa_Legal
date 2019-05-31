@@ -1,6 +1,7 @@
 package com.isaacpilatuna.sht_normativa_legal.Controlador;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Button;
@@ -20,7 +21,10 @@ import javax.mail.internet.MimeMessage;
 
 public class ControlCorreo {
         final private String correo="normativa.sht@gmail.com";
+        final private String receptor="migmen315@gmail.com";
         final private String password="LionSHT2019";
+        final private String asunto="Comentario de aplicativo";
+         private String emisor="";
 
 
 
@@ -28,6 +32,13 @@ public class ControlCorreo {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        SharedPreferences sharedPreferences = context.getSharedPreferences(ControlAutenticacion.PREFS_FILENAME,0);
+        String emisorSharedPreferences =sharedPreferences.getString(ControlAutenticacion.ACCOUNT_AUTH_KEY,ControlAutenticacion.DEFAULT_NON_AUTH_KEY);
+        if(emisorSharedPreferences.equals(ControlAutenticacion.DEFAULT_NON_AUTH_KEY)){
+            emisor=correo;
+        }else{
+            emisor=emisorSharedPreferences;
+        }
         Session sesion=null;
          Properties properties = new Properties();
         properties.put("mail.smtp.user", correo);
@@ -58,9 +69,9 @@ public class ControlCorreo {
             try {
                 Message mensaje = new MimeMessage(sesion);
                 mensaje.setFrom(new InternetAddress(correo));
-                mensaje.setSubject("Comentario de aplicación");
-                mensaje.setRecipients(Message.RecipientType.TO,InternetAddress.parse("isapila1996@gmail.com"));
-                mensaje.setContent(textoMensaje,"text/html; charset=utf-8");
+                mensaje.setSubject(asunto);
+                mensaje.setRecipients(Message.RecipientType.TO,InternetAddress.parse(receptor));
+                mensaje.setContent(textoMensaje+"\nEmisor: "+emisor,"text/html; charset=utf-8");
                 Transport.send(mensaje);
                 Toast.makeText(context,"Correo enviado exitosamente",Toast.LENGTH_LONG).show();
                 btnEnviarComentario.setEnabled(true);
