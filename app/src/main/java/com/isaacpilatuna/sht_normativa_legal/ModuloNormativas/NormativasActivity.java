@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -52,7 +53,6 @@ public class NormativasActivity extends AppCompatActivity
     private String categoriaKey="categoria";
     private String categoriaDB="importantes";
     private String tituloCategoria="Importantes";
-
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseStorage storage=FirebaseStorage.getInstance();
@@ -99,7 +99,8 @@ public class NormativasActivity extends AppCompatActivity
 
 
         recyclerViewDocumentos.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewDocumentos.setAdapter(new RecyclerViewAdapterDocumentos(ref,this,txtResultadosDocumentos));
+
+        recyclerViewDocumentos.setAdapter(new RecyclerViewAdapterDocumentos(categoriaDB,this,txtResultadosDocumentos));
         btnNuevoDocumento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,8 +108,21 @@ public class NormativasActivity extends AppCompatActivity
             }
         });
 
+        btnBuscarDocumento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarDocumento();
+            }
+        });
 
 
+
+    }
+
+    private void buscarDocumento() {
+
+        String txtBusqueda=txtBusquedaDocumento.getText().toString();
+        recyclerViewDocumentos.setAdapter(new RecyclerViewAdapterDocumentos(categoriaDB,this,txtResultadosDocumentos));
     }
 
     private String obtenerTituloCategoria(String categoriaDB) {
