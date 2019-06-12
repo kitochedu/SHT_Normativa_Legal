@@ -1,0 +1,10 @@
+<application>
+  <component name="FileTypeManager" version="17">
+    <extensionMap>
+      <removed_mapping ext="bin" approved="true" type="BINARY_FILE" />
+      <mapping ext="lock" type="Native" />
+      <mapping ext="bin" type="PLAIN_TEXT" />
+      <removed_mapping ext="bin" approved="true" type="BINARY_FILE" />
+    </extensionMap>
+  </component>
+</application>
